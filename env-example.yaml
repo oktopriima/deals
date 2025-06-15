@@ -1,0 +1,19 @@
+app:
+  name: "deals-payroll"
+  port: "8000"
+  domain: "http://localhost:8000"
+
+jwt:
+  key: "jwtkey"
+  issuer: "issuer"
+  duration: "10080"
+  audience: "audience"
+
+mysql:
+  host: "localhost"
+  database: "homestead"
+  password: "homestead"
+  port: "5432"
+  user: "homestead"
+  migration_directory: "migrate/mysql/migrations"
+  log_file: "logs/mysql.log"
