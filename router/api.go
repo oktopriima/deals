@@ -26,6 +26,6 @@ func NewRouter(
 
 	{
 		authRoute := route.Group("/auth")
-		authRoute.POST("/email", authHandler.LoginByEmail)
+		authRoute.POST("", authHandler.LoginByEmail)
 	}
 }
