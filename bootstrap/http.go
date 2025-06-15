@@ -5,6 +5,7 @@ import (
 	"github.com/oktopriima/deals/bootstrap/config"
 	"github.com/oktopriima/deals/bootstrap/postgres"
 	"github.com/oktopriima/deals/bootstrap/server"
+	jwthandle "github.com/oktopriima/deals/lib/jwtHandle"
 	"go.uber.org/dig"
 )
 
@@ -34,6 +35,16 @@ func NewHttpServer(container *dig.Container) *dig.Container {
 	if err = container.Provide(func() *echo.Echo {
 		e := echo.New()
 		return e
+	}); err != nil {
+		panic(err)
+	}
+
+	if err = container.Provide(func(cfg config.AppConfig) jwthandle.AccessToken {
+		return jwthandle.NewAccessToken(jwthandle.Request{
+			SignatureKey: cfg.Jwt.Key,
+			Audience:     cfg.Jwt.Audience,
+			Issuer:       cfg.Jwt.Issuer,
+		})
 	}); err != nil {
 		panic(err)
 	}

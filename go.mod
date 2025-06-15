@@ -8,7 +8,11 @@ require (
 	gorm.io/gorm v1.30.0
 )
 
-require golang.org/x/time v0.11.0 // indirect
+require (
+	github.com/kr/pretty v0.3.1 // indirect
+	github.com/kr/text v0.2.0 // indirect
+	golang.org/x/time v0.11.0 // indirect
+)
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
@@ -25,9 +29,11 @@ require (
 )
 
 require (
+	github.com/bluele/go-timecop v0.0.0-20201023003925-b95363da28d2
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
@@ -49,5 +55,6 @@ require (
 	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

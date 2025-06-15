@@ -3,10 +3,12 @@ package router
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/oktopriima/deals/handler"
 )
 
 func NewRouter(
 	e *echo.Echo,
+	authHandler *handler.AuthenticationHandler,
 ) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -20,5 +22,10 @@ func NewRouter(
 				"message": "pong!!!",
 			})
 		})
+	}
+
+	{
+		authRoute := route.Group("/auth")
+		authRoute.POST("/email", authHandler.LoginByEmail)
 	}
 }

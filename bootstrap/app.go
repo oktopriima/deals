@@ -6,6 +6,9 @@ func NewBootstrap() *dig.Container {
 	c := dig.New()
 
 	c = NewHttpServer(c)
+	c = NewRepository(c)
+	c = NewUsecase(c)
+	c = NewHandler(c)
 
 	return c
 }
