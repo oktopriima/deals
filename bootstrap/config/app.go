@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -40,11 +41,16 @@ func NewAppConfig() (app AppConfig) {
 		env = osEnv
 	}
 
+	envFile := fmt.Sprintf("%s.yaml", env)
+	if path != "" {
+		envFile = path + "/" + env + ".yaml"
+	}
+
 	replacer := strings.NewReplacer(`.`, `_`)
 	viper.AddConfigPath(path)
 	viper.SetEnvKeyReplacer(replacer)
 	viper.SetConfigType(`yaml`)
-	viper.SetConfigFile(env + `.yaml`)
+	viper.SetConfigFile(envFile)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
