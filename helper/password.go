@@ -1,12 +1,8 @@
 package helper
 
 import (
-	"errors"
-
 	"golang.org/x/crypto/bcrypt"
 )
-
-var ErrInvalidCredentials = errors.New("invalid credentials")
 
 // GeneratePassword takes a plain text password as input and returns its bcrypt hashed representation as a string.
 // It uses the default cost provided by the bcrypt package for hashing.
