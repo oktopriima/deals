@@ -55,7 +55,9 @@ func TestLoginByEmail_BindError(t *testing.T) {
 
 func TestLoginByEmail_ValidateError(t *testing.T) {
 	e := echo.New()
-	body := dto.AuthenticationRequest{}
+	body := dto.AuthenticationRequest{
+		Username: "username",
+	}
 	b, _ := json.Marshal(body)
 	req := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(b))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
