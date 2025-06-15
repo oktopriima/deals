@@ -9,7 +9,10 @@ import (
 	"github.com/oktopriima/deals/usecase/authentication/dto"
 )
 
-// LoginUsecase implements AuthenticationUsecase.
+// LoginUsecase handles the authentication process for a user login.
+// It takes an AuthenticationRequest and a context, then attempts to find the user by username.
+// If the user is found and the password is correct, it generates a JWT token and returns an AuthenticationResponse.
+// Returns an error if the user is not found, the password is incorrect, or token generation fails.
 func (a *authenticationUsecase) LoginUsecase(req dto.AuthenticationRequest, ctx context.Context) (dto.AuthenticationResponse, error) {
 	user, err := a.userRepository.FindByUsername(req.Username, ctx)
 	if err != nil {

@@ -22,7 +22,7 @@ func NewUserRepository(dbInstance postgres.DBInstance) UserRepository {
 	}
 }
 
-// FindByEmail implements UserRepository.
+// FindByUsername implements UserRepository.
 func (u *userRepository) FindByUsername(email string, ctx context.Context) (*models.User, error) {
 	var user models.User
 	result := u.db.WithContext(ctx).Where("username = ?", email).First(&user)

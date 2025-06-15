@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/oktopriima/deals/helper"
 	"github.com/oktopriima/deals/usecase/authentication"
 	"github.com/oktopriima/deals/usecase/authentication/dto"
 )
@@ -22,7 +21,7 @@ func NewAuthenticationHandler(uc authentication.AuthenticationUsecase) *Authenti
 func (h *AuthenticationHandler) LoginByEmail(c echo.Context) error {
 	var req dto.AuthenticationRequest
 	if err := c.Bind(&req); err != nil {
-		return helper.ResponseFailed(c, http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	if err := c.Validate(req); err != nil {
@@ -31,8 +30,8 @@ func (h *AuthenticationHandler) LoginByEmail(c echo.Context) error {
 
 	output, err := h.uc.LoginUsecase(req, c.Request().Context())
 	if err != nil {
-		return helper.ResponseFailed(c, http.StatusUnauthorized, err.Error())
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	return helper.ResponseOK(c, output.GetObject())
+	return c.JSON(http.StatusOK, output)
 }
