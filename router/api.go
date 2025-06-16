@@ -12,6 +12,7 @@ func NewRouter(
 	e *echo.Echo,
 	jwt jwthandle.AccessToken,
 	authHandler *handler.AuthenticationHandler,
+	attendanceHandler *handler.AttendanceHandler,
 	adminAttendanceHandler *handler.AdminAttendanceHandler,
 ) {
 	e.Use(middleware.Logger())
@@ -31,6 +32,17 @@ func NewRouter(
 	{
 		authRoute := route.Group("/auth")
 		authRoute.POST("", authHandler.LoginByEmail)
+	}
+
+	{
+		employeesRoute := route.Group("/employees")
+		employeesRoute.Use(custom_middleware.Auth(jwt))
+		employeesRoute.Use(custom_middleware.Employee())
+
+		{
+			attendanceRoute := employeesRoute.Group("/attendance")
+			attendanceRoute.POST("", attendanceHandler.Serve)
+		}
 	}
 
 	{

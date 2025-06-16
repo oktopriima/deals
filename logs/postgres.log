@@ -1147,3 +1147,24 @@
 
 2025/06/16 12:18:16 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/attendance.go:31
 [11.305ms] [rows:1] INSERT INTO "attendances" ("user_id","timestamp","date_string","time_string") VALUES (2,'2025-06-16 12:17:06.862','2025-06-16','12:17:06') RETURNING "id"
+
+2025/06/16 15:44:35 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/user.go:28
+[1.495ms] [rows:1] SELECT * FROM "users" WHERE username = 'admin' ORDER BY "users"."id" LIMIT 1
+
+2025/06/16 15:44:45 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/attendance.go:46
+[0.874ms] [rows:1] SELECT count(*) FROM "attendances" WHERE user_id = 2 AND date_string = '2025-06-16'
+
+2025/06/16 15:45:27 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/user.go:28
+[0.490ms] [rows:1] SELECT * FROM "users" WHERE username = 'user1' ORDER BY "users"."id" LIMIT 1
+
+2025/06/16 15:45:32 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/user.go:28
+[0.465ms] [rows:1] SELECT * FROM "users" WHERE username = 'user1' ORDER BY "users"."id" LIMIT 1
+
+2025/06/16 15:45:58 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/user.go:28
+[0.507ms] [rows:1] SELECT * FROM "users" WHERE username = 'user1' ORDER BY "users"."id" LIMIT 1
+
+2025/06/16 15:51:40 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/attendance.go:46
+[1.236ms] [rows:1] SELECT count(*) FROM "attendances" WHERE user_id = 2 AND date_string = '2025-06-16'
+
+2025/06/16 15:51:42 /home/oktoprima/WORK/go/src/github.com/oktopriima/deals/repository/attendance.go:46
+[0.428ms] [rows:1] SELECT count(*) FROM "attendances" WHERE user_id = 2 AND date_string = '2025-06-16'

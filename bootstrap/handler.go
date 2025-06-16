@@ -16,5 +16,9 @@ func NewHandler(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(handler.NewAttendanceHandler); err != nil {
+		panic(err)
+	}
+
 	return c
 }
