@@ -18,7 +18,7 @@ func NewAuthenticationHandler(uc authentication.AuthenticationUsecase) *Authenti
 	}
 }
 
-func (h *AuthenticationHandler) LoginByEmail(c echo.Context) error {
+func (h *AuthenticationHandler) Serve(c echo.Context) error {
 	var req dto.AuthenticationRequest
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{

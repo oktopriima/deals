@@ -16,5 +16,9 @@ func NewRepository(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(repository.NewOvertimeRepository); err != nil {
+		panic(err)
+	}
+
 	return c
 }

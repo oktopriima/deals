@@ -20,5 +20,9 @@ func NewHandler(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(handler.NewOvertimeHandler); err != nil {
+		panic(err)
+	}
+
 	return c
 }
