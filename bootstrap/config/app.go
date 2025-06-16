@@ -29,6 +29,7 @@ type AppConfig struct {
 		MigrationDirectory string `mapstructure:"migration_directory"`
 		LogDirectory       string `mapstructure:"log_directory"`
 		LogFile            string `mapstructure:"log_file"`
+		Zone               string `mapstructure:"zone"`
 	} `mapstructure:"postgres"`
 }
 

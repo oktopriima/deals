@@ -15,7 +15,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func PostgresConnection(cfg config.AppConfig) (*gorm.DB, error) {
+func connection(cfg config.AppConfig) (*gorm.DB, error) {
 	var dbLogFile *os.File
 	dbLogFile, err := os.OpenFile(fmt.Sprintf("%s/%s", cfg.Postgres.LogDirectory, cfg.Postgres.LogFile), os.O_CREATE|os.O_RDWR|os.O_APPEND, fs.ModePerm)
 	if err != nil && errors.Is(err, os.ErrNotExist) {
@@ -33,18 +33,23 @@ func PostgresConnection(cfg config.AppConfig) (*gorm.DB, error) {
 		},
 	)
 
+	loc, _ := time.LoadLocation("Asia/Jakarta")
 	gormConfig := &gorm.Config{
 		PrepareStmt:            true,
 		SkipDefaultTransaction: true,
 		Logger:                 dbLogger,
+		NowFunc: func() time.Time {
+			return time.Now().In(loc)
+		},
 	}
 
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&timezone=%s",
 		cfg.Postgres.User,
 		cfg.Postgres.Password,
 		cfg.Postgres.Host,
 		cfg.Postgres.Port,
 		cfg.Postgres.Database,
+		cfg.Postgres.Zone,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
@@ -67,7 +72,7 @@ type DBInstance interface {
 func NewDatabaseInstance(cfg config.AppConfig) DBInstance {
 	ins := new(Instance)
 
-	database, err := PostgresConnection(cfg)
+	database, err := connection(cfg)
 	if err != nil {
 		panic(fmt.Sprintf("failed to connect to database. error: %s", err.Error()))
 	}

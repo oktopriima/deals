@@ -129,7 +129,7 @@ func TestLoginByEmail_Success(t *testing.T) {
 	var resp map[string]interface{}
 	err = json.Unmarshal(rec.Body.Bytes(), &resp)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedOutput.GetObject().AccessToken, resp["access_token"])
-	assert.Equal(t, expectedOutput.GetObject().RefreshToken, resp["refresh_token"])
-	assert.Equal(t, expectedOutput.GetObject().ExpiresIn, int64(resp["expires_in"].(float64)))
+	assert.Equal(t, expectedOutput.GetObject().AccessToken, resp["data"].(map[string]interface{})["access_token"])
+	assert.Equal(t, expectedOutput.GetObject().RefreshToken, resp["data"].(map[string]interface{})["refresh_token"])
+	assert.Equal(t, expectedOutput.GetObject().ExpiresIn, int64(resp["data"].(map[string]interface{})["expires_in"].(float64)))
 }

@@ -21,7 +21,10 @@ func NewAuthenticationHandler(uc authentication.AuthenticationUsecase) *Authenti
 func (h *AuthenticationHandler) LoginByEmail(c echo.Context) error {
 	var req dto.AuthenticationRequest
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"code":    http.StatusBadRequest,
+			"message": err.Error(),
+		})
 	}
 
 	if err := c.Validate(req); err != nil {
@@ -30,8 +33,15 @@ func (h *AuthenticationHandler) LoginByEmail(c echo.Context) error {
 
 	output, err := h.uc.LoginUsecase(req, c.Request().Context())
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"code":    http.StatusBadRequest,
+			"message": err.Error(),
+		})
 	}
 
-	return c.JSON(http.StatusOK, output)
+	return c.JSON(http.StatusOK, echo.Map{
+		"code":    http.StatusOK,
+		"message": "OK",
+		"data":    output,
+	})
 }
