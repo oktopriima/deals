@@ -15,9 +15,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ROUTE}}/api/ping",
+					"raw": "{{HOST}}/api/ping",
 					"host": [
-						"{{ROUTE}}"
+						"{{HOST}}"
 					],
 					"path": [
 						"api",
@@ -45,9 +45,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{ROUTE}}/api/auth",
+					"raw": "{{HOST}}/api/auth",
 					"host": [
-						"{{ROUTE}}"
+						"{{HOST}}"
 					],
 					"path": [
 						"api",
