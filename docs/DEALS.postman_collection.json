@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "2bf04289-c0d1-4b7e-b498-90cf5760e2dd",
+		"name": "DEALS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2696117"
+	},
+	"item": [
+		{
+			"name": "PING",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ROUTE}}/api/ping",
+					"host": [
+						"{{ROUTE}}"
+					],
+					"path": [
+						"api",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ROUTE}}/api/auth",
+					"host": [
+						"{{ROUTE}}"
+					],
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN ATTENDANCE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"user_id\" : 2,\n  \"timestamp\" : \"2025-06-07T09:00:00+07:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/admin/attendance",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"attendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EMPLOYEE ATTENDANCE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timestamp\" : \"2025-06-30T09:00:00+07:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/employees/attendance",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"attendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EMPLOYEE OVERTIME",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\" : \"2025-06-11T18:00:00+07:00\",\n    \"duration\" : 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/employees/overtime",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"overtime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EMPLOYEE REIMBURSEMENT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\" : \"2025-06-13T09:00:00+07:00\",\n    \"amount\" : 50000,\n    \"description\" : \"transport\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/employees/reimbursement",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"reimbursement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EMPLOYEE PAYROLL PERIOD LIST",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/employees/payroll/period/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"payroll",
+						"period",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EMPLOYEE PAYSLIP",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/employees/payslip/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"payslip",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN PAYROLL PERIOD CREATE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"start_date\": \"2025-06-01T00:00:00+07:00\",\n    \"end_date\" : \"2025-06-30T00:00:00+07:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/admin/payroll/period",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"payroll",
+						"period"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN PAYROLL PERIOD LIST",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/admin/payroll/period",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"payroll",
+						"period"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN RUN PAYROLL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payroll_period_id\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/api/admin/payroll",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"payroll"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
