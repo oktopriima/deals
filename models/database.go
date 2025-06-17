@@ -14,5 +14,6 @@ func (db *DB) AutoMigrate() error {
 		&Reimbursement{},
 		&PayrollPeriod{},
 		&Payslip{},
+		&AuditLog{},
 	)
 }

@@ -20,5 +20,9 @@ func NewRepository(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(repository.NewReimbursementRepository); err != nil {
+		panic(err)
+	}
+
 	return c
 }

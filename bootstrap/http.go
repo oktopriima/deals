@@ -7,6 +7,7 @@ import (
 	"github.com/oktopriima/deals/bootstrap/server"
 	jwthandle "github.com/oktopriima/deals/lib/jwtHandle"
 	"go.uber.org/dig"
+	"strconv"
 )
 
 func NewHttpServer(container *dig.Container) *dig.Container {
@@ -40,11 +41,12 @@ func NewHttpServer(container *dig.Container) *dig.Container {
 	}
 
 	if err = container.Provide(func(cfg config.AppConfig) jwthandle.AccessToken {
+		duration, _ := strconv.ParseInt(cfg.Jwt.Duration, 10, 64)
 		return jwthandle.NewAccessToken(jwthandle.Request{
 			SignatureKey: cfg.Jwt.Key,
 			Audience:     cfg.Jwt.Audience,
 			Issuer:       cfg.Jwt.Issuer,
-		})
+		}, duration)
 	}); err != nil {
 		panic(err)
 	}

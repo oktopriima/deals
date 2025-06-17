@@ -14,11 +14,13 @@ func NewRouter(
 	authHandler *handler.AuthenticationHandler,
 	attendanceHandler *handler.AttendanceHandler,
 	overtimeHandler *handler.OvertimeHandler,
+	reimbursementHandler *handler.ReimbursementHandler,
 	adminAttendanceHandler *handler.AdminAttendanceHandler,
 ) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
+	e.Use(middleware.RequestID())
 
 	route := e.Group("/api")
 
@@ -48,6 +50,11 @@ func NewRouter(
 		{
 			overtimeRoute := employeesRoute.Group("/overtime")
 			overtimeRoute.POST("", overtimeHandler.Serve)
+		}
+
+		{
+			reimbursementRoute := employeesRoute.Group("/reimbursement")
+			reimbursementRoute.POST("", reimbursementHandler.Serve)
 		}
 	}
 

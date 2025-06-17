@@ -43,7 +43,9 @@ type AccessToken interface {
 func NewAccessToken(req Request, duration ...int64) AccessToken {
 	dur := DefaultDuration
 	if len(duration) > 0 {
-		dur = duration[0]
+		if duration[0] > 0 && duration[0] > dur {
+			dur = duration[0]
+		}
 	}
 
 	shortSign := req.SignatureKey

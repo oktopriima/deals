@@ -24,5 +24,9 @@ func NewHandler(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(handler.NewReimbursementHandler); err != nil {
+		panic(err)
+	}
+
 	return c
 }

@@ -8,6 +8,7 @@ type Payslip struct {
 	OvertimePayment float64 `gorm:"not null"`
 	Reimbursements  float64 `gorm:"not null"`
 	TotalPayment    float64 `gorm:"not null"`
+	BaseModel
 }
 
 func (Payslip) TableName() string {
