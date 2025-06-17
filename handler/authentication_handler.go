@@ -42,6 +42,6 @@ func (h *AuthenticationHandler) Serve(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{
 		"code":    http.StatusOK,
 		"message": "OK",
-		"data":    output,
+		"data":    output.GetObject(),
 	})
 }

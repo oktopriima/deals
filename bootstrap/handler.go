@@ -28,5 +28,9 @@ func NewHandler(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(handler.NewPayrollPeriodHandler); err != nil {
+		panic(err)
+	}
+
 	return c
 }

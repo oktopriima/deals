@@ -48,7 +48,7 @@ func TestLoginByEmail_BindError(t *testing.T) {
 	mockUC := new(MockAuthenticationUsecase)
 	h := NewAuthenticationHandler(mockUC)
 
-	err := h.LoginByEmail(c)
+	err := h.Serve(c)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.NoError(t, err)
 }
@@ -73,7 +73,7 @@ func TestLoginByEmail_ValidateError(t *testing.T) {
 	mockUC := new(MockAuthenticationUsecase)
 	h := NewAuthenticationHandler(mockUC)
 
-	err := h.LoginByEmail(c)
+	err := h.Serve(c)
 	assert.EqualError(t, err, "validation error")
 }
 
@@ -96,7 +96,7 @@ func TestLoginByEmail_LoginUsecaseError(t *testing.T) {
 	mockUC.On("LoginUsecase", body, mock.Anything).Return(nil, errors.New("login failed"))
 	h := NewAuthenticationHandler(mockUC)
 
-	err := h.LoginByEmail(c)
+	err := h.Serve(c)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.NoError(t, err)
 }
@@ -122,7 +122,7 @@ func TestLoginByEmail_Success(t *testing.T) {
 	mockUC.On("LoginUsecase", body, mock.Anything).Return(expectedOutput, nil)
 	h := NewAuthenticationHandler(mockUC)
 
-	err := h.LoginByEmail(c)
+	err := h.Serve(c)
 	assert.Equal(t, http.StatusOK, rec.Code)
 	assert.NoError(t, err)
 
