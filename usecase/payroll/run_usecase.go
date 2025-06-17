@@ -3,7 +3,7 @@ package payroll
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"errors"
 	"github.com/oktopriima/deals/helper"
 	"github.com/oktopriima/deals/models"
 	"github.com/oktopriima/deals/usecase/payroll/dto"
@@ -14,6 +14,10 @@ func (p *payrollUsecase) RunUsecase(ctx context.Context, req dto.RunPayrollReque
 	payrollPeriod, err := p.payrollPeriodRepo.Find(ctx, req.PayrollPeriodId)
 	if err != nil {
 		return nil, err
+	}
+
+	if payrollPeriod.Processed {
+		return nil, errors.New("payroll period is already processed")
 	}
 
 	users, err := p.userRepo.ListEmployees(ctx)
@@ -35,19 +39,12 @@ func (p *payrollUsecase) RunUsecase(ctx context.Context, req dto.RunPayrollReque
 		}
 
 		salary := user.Salary
-		fmt.Printf("salary for user: %d is Rp.%.2f\n", user.ID, salary)
 
 		dailySalary := salary / float64(totalWorkingDays)
-		fmt.Printf("daily salary for user: %d is Rp.%.2f\n", user.ID, dailySalary)
-
-		baseSalary := dailySalary * float64(len(attendances))
-		fmt.Printf("monthly salary for user: %d is Rp.%.2f\n", user.ID, baseSalary)
-
 		deduction := dailySalary * (float64(totalWorkingDays) - float64(len(attendances)))
-		fmt.Printf("monthly total deduction salary for user: %d is Rp.%.2f\n", user.ID, deduction)
+
 		// overtime section
 		hourlySalary := dailySalary / float64(8)
-		fmt.Printf("hourly salary for user: %d is Rp.%.2f\n", user.ID, hourlySalary)
 
 		overtimes, err := p.overtimeRepo.ListOvertimeByUserId(user.ID, payrollPeriod.StartDate, payrollPeriod.EndDate, ctx)
 		if err != nil {
@@ -60,7 +57,6 @@ func (p *payrollUsecase) RunUsecase(ctx context.Context, req dto.RunPayrollReque
 		}
 
 		overtimeSalary := (hourlySalary * 2) * float64(totalOvertimeHour)
-		fmt.Printf("total overtime for user: %d is Rp.%.2f\n", user.ID, overtimeSalary)
 
 		// reimbursement
 		reimbursements, err := p.reimbursementRepo.ListByUserID(user.ID, payrollPeriod.StartDate, payrollPeriod.EndDate, ctx)
@@ -72,11 +68,7 @@ func (p *payrollUsecase) RunUsecase(ctx context.Context, req dto.RunPayrollReque
 		for _, reimbursement := range reimbursements {
 			totalReimbursement += reimbursement.Amount
 		}
-
-		fmt.Printf("total reimbursement for user: %d is Rp.%.2f\n", user.ID, totalReimbursement)
-
 		totalPayment := (salary - deduction) + totalReimbursement + overtimeSalary
-		fmt.Printf("total salary for user: %d is Rp.%.2f\n", user.ID, totalPayment)
 
 		attendancesByte, _ := json.Marshal(attendances)
 		overtimeByte, _ := json.Marshal(overtimes)
