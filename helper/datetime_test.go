@@ -47,3 +47,36 @@ func TestIsWeekend(t *testing.T) {
 		})
 	}
 }
+
+func TestWorkingDaysCount(t *testing.T) {
+	type args struct {
+		startDate time.Time
+		endDate   time.Time
+	}
+
+	loc, _ := time.LoadLocation("Asia/Jakarta")
+	start := time.Date(2025, 6, 1, 0, 0, 0, 0, loc)
+	end := time.Date(2025, 6, 30, 0, 0, 0, 0, loc)
+
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test june",
+			args: args{
+				startDate: start,
+				endDate:   end,
+			},
+			want: 21,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := WorkingDaysCount(tt.args.startDate, tt.args.endDate); got != tt.want {
+				t.Errorf("WorkingDaysCount() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

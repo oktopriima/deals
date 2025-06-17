@@ -75,13 +75,19 @@ func seedUser(db *gorm.DB) error {
 		return err
 	}
 
+	salaries := []float64{
+		4000000, 4500000, 5000000, 5500000,
+		6000000, 6500000, 7000000, 7500000,
+		8000000, 8500000, 9000000, 9500000,
+	}
+
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 1; i <= 100; i++ {
 		u := models.User{
 			Username: fmt.Sprintf("user%d", i),
 			Password: helper.GeneratePassword(fmt.Sprintf("pass%d", i)),
 			IsAdmin:  false,
-			Salary:   float64(4000000 + rng.Intn(6000000)),
+			Salary:   salaries[rng.Intn(len(salaries))],
 		}
 		if err := db.Create(&u).Error; err != nil {
 			return err

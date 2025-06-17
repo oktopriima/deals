@@ -16,6 +16,7 @@ func NewRouter(
 	overtimeHandler *handler.OvertimeHandler,
 	reimbursementHandler *handler.ReimbursementHandler,
 	payrollPeriodHandler *handler.PayrollPeriodHandler,
+	payrollHandler *handler.PayrollHandler,
 	adminAttendanceHandler *handler.AdminAttendanceHandler,
 ) {
 	e.Use(middleware.Logger())
@@ -79,6 +80,11 @@ func NewRouter(
 			adminPayrollPeriodRoute := adminRoute.Group("/payroll/period")
 			adminPayrollPeriodRoute.POST("", payrollPeriodHandler.ServeCreate)
 			adminPayrollPeriodRoute.GET("", payrollPeriodHandler.ServeList)
+		}
+
+		{
+			adminPayrollRoute := adminRoute.Group("/payroll")
+			adminPayrollRoute.POST("", payrollHandler.Serve)
 		}
 	}
 }

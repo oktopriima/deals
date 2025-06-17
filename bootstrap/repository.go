@@ -28,5 +28,9 @@ func NewRepository(c *dig.Container) *dig.Container {
 		panic(err)
 	}
 
+	if err = c.Provide(repository.NewPayslipRepository); err != nil {
+		panic(err)
+	}
+
 	return c
 }

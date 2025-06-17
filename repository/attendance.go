@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/oktopriima/deals/bootstrap/postgres"
 	"github.com/oktopriima/deals/models"
@@ -16,6 +17,7 @@ type attendanceRepository struct {
 type AttendanceRepository interface {
 	Store(m *models.Attendance, c context.Context) error
 	CheckAlreadyExists(userID int64, dateString string, c context.Context) bool
+	ListAttendanceByUserID(ctx context.Context, userID int64, startDate, endDate time.Time) ([]*models.Attendance, error)
 }
 
 func NewAttendanceRepository(dbInstance postgres.DBInstance) AttendanceRepository {
@@ -50,4 +52,22 @@ func (a *attendanceRepository) CheckAlreadyExists(userID int64, dateString strin
 	}
 
 	return count > 0
+}
+
+func (a *attendanceRepository) ListAttendanceByUserID(ctx context.Context, userID int64, startDate, endDate time.Time) ([]*models.Attendance, error) {
+	if a.db == nil {
+		return nil, errors.New("attendance repository not initialized")
+	}
+
+	endDate = endDate.Add(time.Second * 86399)
+	var list []*models.Attendance
+	db := a.db.WithContext(ctx)
+	result := db.
+		Where("user_id = ? AND timestamp BETWEEN ? AND ?", userID, startDate.Format(time.RFC3339), endDate.Format(time.RFC3339)).
+		Find(&list)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return list, nil
 }

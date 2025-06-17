@@ -4,6 +4,7 @@ import (
 	"github.com/oktopriima/deals/usecase/attendance"
 	"github.com/oktopriima/deals/usecase/authentication"
 	"github.com/oktopriima/deals/usecase/overtime"
+	"github.com/oktopriima/deals/usecase/payroll"
 	"github.com/oktopriima/deals/usecase/payroll_period"
 	"github.com/oktopriima/deals/usecase/reimbursement"
 	"go.uber.org/dig"
@@ -29,6 +30,10 @@ func NewUsecase(c *dig.Container) *dig.Container {
 	}
 
 	if err = c.Provide(payroll_period.NewPayrollPeriodUsecase); err != nil {
+		panic(err)
+	}
+
+	if err = c.Provide(payroll.NewPayrollUsecase); err != nil {
 		panic(err)
 	}
 
