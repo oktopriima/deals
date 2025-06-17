@@ -73,15 +73,22 @@ func (p *payrollUsecase) RunUsecase(ctx context.Context, req dto.RunPayrollReque
 		attendancesByte, _ := json.Marshal(attendances)
 		overtimeByte, _ := json.Marshal(overtimes)
 		reimbursementByte, _ := json.Marshal(reimbursements)
+		usersByte, _ := json.Marshal(user)
 		// store payslip
 		if err := p.payslipRepo.Store(ctx, &models.Payslip{
 			UserID:             user.ID,
 			PayrollPeriodId:    payrollPeriod.ID,
 			BasePayment:        salary,
+			DailyPayment:       dailySalary,
+			HourlyPayment:      hourlySalary,
+			TotalWorkingDays:   float64(totalWorkingDays),
+			TotalAttendance:    float64(len(attendances)),
+			TotalHourOvertime:  float64(totalOvertimeHour),
 			DeductionAmount:    deduction,
 			OvertimePayment:    overtimeSalary,
 			Reimbursements:     totalReimbursement,
 			TotalPayment:       totalPayment,
+			Users:              string(usersByte),
 			ListAttendances:    string(attendancesByte),
 			ListOvertimes:      string(overtimeByte),
 			ListReimbursements: string(reimbursementByte),

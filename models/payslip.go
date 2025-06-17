@@ -10,10 +10,16 @@ type Payslip struct {
 	UserID             int64   `gorm:"not null;index:user_period,unique"`
 	PayrollPeriodId    int64   `gorm:"not null;index:user_period,unique"`
 	BasePayment        float64 `gorm:"not null"`
+	DailyPayment       float64 `gorm:"not null"`
+	HourlyPayment      float64 `gorm:"not null"`
+	TotalWorkingDays   float64 `gorm:"not null"`
+	TotalAttendance    float64 `gorm:"not null"`
 	DeductionAmount    float64 `gorm:"not null"`
+	TotalHourOvertime  float64 `gorm:"not null"`
 	OvertimePayment    float64 `gorm:"not null"`
 	Reimbursements     float64 `gorm:"not null"`
 	TotalPayment       float64 `gorm:"not null"`
+	Users              string  `gorm:"type:jsonb"`
 	ListAttendances    string  `gorm:"type:jsonb"`
 	ListOvertimes      string  `gorm:"type:jsonb"`
 	ListReimbursements string  `gorm:"type:jsonb"`

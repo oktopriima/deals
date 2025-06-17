@@ -64,6 +64,11 @@ func NewRouter(
 			payrollPeriodRoute.GET("/:id", payrollPeriodHandler.ServeFind)
 			payrollPeriodRoute.GET("", payrollPeriodHandler.ServeList)
 		}
+
+		{
+			payslipRoute := employeesRoute.Group("/payslip")
+			payslipRoute.GET("/:payrollPeriodId", payrollHandler.ServeFindByUser)
+		}
 	}
 
 	{

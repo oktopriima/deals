@@ -17,6 +17,7 @@ type payrollUsecase struct {
 
 type PayrollUsecase interface {
 	RunUsecase(ctx context.Context, req dto.RunPayrollRequest) (dto.RunPayrollResponse, error)
+	FindByUserUsecase(ctx context.Context, periodId int64) (dto.DetailPayrollResponse, error)
 }
 
 func NewPayrollUsecase(userRepo repository.UserRepository,
